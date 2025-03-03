@@ -1,5 +1,5 @@
 # Utiliser une image de base PHP avec Apache
-FROM php:8.0-apache
+FROM php:8.3-apache
 
 # Installer les bibliothèques de développement PostgreSQL
 RUN apt-get update && apt-get install -y libpq-dev
