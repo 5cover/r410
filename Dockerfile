@@ -1,6 +1,9 @@
 # Utiliser une image de base PHP avec Apache
 FROM php:8.0-apache
 
+# Installer les bibliothèques de développement PostgreSQL
+RUN apt-get update && apt-get install -y libpq-dev
+
 # Installer les extensions PHP nécessaires
 RUN docker-php-ext-install pgsql
 
