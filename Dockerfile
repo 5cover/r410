@@ -2,7 +2,7 @@
 FROM php:8.3-apache
 
 # Installer les bibliothèques de développement PostgreSQL
-RUN apt-get update && apt-get install -y libpq-dev
+RUN apt-get update && apt-get install -y libpq-dev composer
 
 # Installer les extensions PHP nécessaires
 RUN docker-php-ext-install pgsql
@@ -13,5 +13,8 @@ COPY ./src /var/www/
 # Configurer les permissions si nécessaire
 RUN chown -R www-data:www-data /var/www/html/
 
-CMD ["php", "/var/www/spark", "optimize"]
-CMD ["php", "/var/www/spark", "serve", "--host", "0.0.0.0", "--port", "7860"]
+WORKDIR "/var/www"
+
+CMD ["composer", "install"]
+CMD ["php", "spark", "optimize"]
+CMD ["php", "spark", "serve", "--host", "0.0.0.0", "--port", "7860"]
