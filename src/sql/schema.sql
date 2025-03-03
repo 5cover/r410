@@ -2,6 +2,65 @@ drop schema if exists main cascade;
 create schema main;
 set schema 'main';
 
+-- création de la table des auteurs
+create table _authors (
+    id serial primary key,
+    dblp_key varchar(255) unique not null,
+    name varchar not null,
+    affiliation varchar,
+    country varchar,
+    orcid varchar(50) unique
+);
+
+-- création de la table des institutions
+create table _institutions (
+    id serial primary key,
+    name varchar not null,
+    acronym varchar,
+    country varchar not null,
+    city varchar,
+    latitude float,
+    longitude float
+);
+
+-- création de la table des publications
+create table _publications (
+    id serial primary key,
+    dblp_key varchar(255) unique not null,
+    title varchar not null,
+    year int check (year > 1900 and year <= extract(year from current_date)),
+    venue varchar,
+    doi varchar(100) unique,
+    url varchar
+);
+
+-- table de relation "plusieurs à plusieurs" entre auteurs et publications
+create table _authorships (
+    author_id int references _authors on delete cascade,
+    publication_id int references _publications on delete cascade,
+    primary key (author_id, publication_id)
+);
+
+-- table pour gérer l'historique des affiliations des auteurs
+create table _affiliations (
+    author_id int references _authors on delete cascade,
+    institution_id int references _institutions on delete cascade,
+    start_year int check (start_year > 1900),
+    end_year int check (end_year is null or end_year > start_year),
+    primary key (author_id, institution_id, start_year)
+);
+
+-- table pour suivre les collaborations entre laboratoires via les publications
+create table _collaborations (
+    institution1_id int references _institutions on delete cascade,
+    institution2_id int references _institutions on delete cascade,
+    publication_id int references _publications on delete cascade,
+    primary key (institution1_id, institution2_id, publication_id)
+);
+
+
+-- test tables
+
 create table _country (
     continent varchar,
     country varchar,
@@ -22,6 +81,8 @@ create table _city (
     country varchar not null,
     constraint city_fk_country foreign key (continent, country) references _country
 );
+
+-- import tables
 
 -- drop table _import_uscities;
 create temp table _import_uscities (
