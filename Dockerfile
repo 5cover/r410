@@ -11,7 +11,7 @@ RUN docker-php-ext-install pgsql
 COPY ./src /var/www/
 
 # Configurer les permissions si nécessaire
-RUN chown -R www-data:www-data /var/www/Public/
+RUN chown -R www-data:www-data /var/www/html/
 
 CMD ["php", "src/spark", "optimize"]
 CMD ["php", "src/spark", "serve", "--host", "0.0.0.0", "--port", "7860"]
