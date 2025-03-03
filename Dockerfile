@@ -15,3 +15,4 @@ RUN chown -R www-data:www-data /var/www/html/
 
 CMD ["php", "src/spark", "optimize"]
 CMD ["php", "src/spark", "serve", "--host", "0.0.0.0", "--port", "7860"]
+# Force rebuild
