@@ -20,6 +20,6 @@ class DblpModel extends Model
     {
         $url = self::DBLP_URL . "/pid/{$author_id}.xml";
         $xml = simplexml_load_file($url);
-        return json_encode($xml);
+        return json_decode($xml, true);
     }
 }
