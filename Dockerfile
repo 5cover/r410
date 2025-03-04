@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y libpq-dev curl unzip git
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Installer les extensions PHP nécessaires
-RUN docker-php-ext-install pgsql
+RUN docker-php-ext-install pgsql intl
 
 # Copier le code de votre application dans le répertoire approprié
 COPY ./src /var/www/
@@ -18,6 +18,7 @@ RUN chown -R www-data:www-data /var/www/html/
 
 WORKDIR "/var/www"
 
+#RUN ["composer", "update"]
 RUN ["composer", "install"]
 RUN ["php", "spark", "optimize"]
 
