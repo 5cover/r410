@@ -18,6 +18,7 @@ RUN chown -R www-data:www-data /var/www/html/
 
 WORKDIR "/var/www"
 
-CMD ["composer", "install"]
-CMD ["php", "spark", "optimize"]
+RUN ["composer", "install"]
+RUN ["php", "spark", "optimize"]
+
 CMD ["php", "spark", "serve", "--host", "0.0.0.0", "--port", "7860"]
