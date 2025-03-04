@@ -2,7 +2,8 @@
 FROM php:8.3-apache
 
 # Installer les bibliothèques de développement PostgreSQL
-RUN apt-get update && apt-get install -y libpq-dev curl unzip git
+# libicu-dev : for intl
+RUN apt-get update && apt-get install -y libpq-dev curl unzip git libicu-dev
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -19,7 +20,7 @@ RUN chown -R www-data:www-data /var/www/html/
 WORKDIR "/var/www"
 
 #RUN ["composer", "update"]
-RUN ["composer", "install"]
-RUN ["php", "spark", "optimize"]
+RUN composer install
+RUN php spark optimize
 
 CMD ["php", "spark", "serve", "--host", "0.0.0.0", "--port", "7860"]
