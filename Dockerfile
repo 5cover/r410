@@ -19,9 +19,11 @@ RUN chown -R www-data:www-data /var/www/
 
 WORKDIR "/var/www"
 
+RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+
 RUN echo "$DOTENV" > .env
 
 RUN composer install
 RUN php spark optimize
 
-CMD ["php", "spark", "serve", "--host", "0.0.0.0", "--port", "7860", "-vvv"]
+CMD ["php", "spark", "serve", "--host", "0.0.0.0", "--port", "7860"]
