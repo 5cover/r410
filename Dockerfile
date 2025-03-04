@@ -24,4 +24,4 @@ RUN echo "$DOTENV" > .env
 RUN composer install
 RUN php spark optimize
 
-CMD ["php", "spark", "serve", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["php", "spark", "serve", "--host", "0.0.0.0", "--port", "7860", "-vvv"]

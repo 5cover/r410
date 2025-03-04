@@ -24,3 +24,10 @@ Todo:
 - db creation script
 
 ## Setup env file on remote
+
+## todo
+
+infos:
+
+- citations
+- ordre des auteurs important
