@@ -15,7 +15,7 @@ RUN docker-php-ext-install pgsql intl
 COPY ./src /var/www/
 
 # Configurer les permissions si nécessaire
-RUN chown -R www-data:www-data /var/www/html/
+RUN chown -R www-data:www-data /var/www/
 
 WORKDIR "/var/www"
 
