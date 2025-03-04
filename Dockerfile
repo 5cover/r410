@@ -17,7 +17,7 @@ COPY ./src /var/www/
 WORKDIR "/var/www"
 
 RUN chown -R www-data:www-data /var/www/
-RUN chmod -R 775 /var/www/writable/
+RUN chmod -R ugo+w /var/www/writable/
 RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 RUN echo "$DOTENV" > .env
 RUN composer install
