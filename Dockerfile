@@ -19,7 +19,8 @@ RUN chown -R www-data:www-data /var/www/html/
 
 WORKDIR "/var/www"
 
-#RUN ["composer", "update"]
+RUN echo "$DOTENV" > .env
+
 RUN composer install
 RUN php spark optimize
 
