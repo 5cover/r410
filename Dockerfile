@@ -14,15 +14,12 @@ RUN docker-php-ext-install pgsql intl
 # Copier le code de votre application dans le répertoire approprié
 COPY ./src /var/www/
 
-# Configurer les permissions si nécessaire
-RUN chown -R www-data:www-data /var/www/
-
 WORKDIR "/var/www"
 
+RUN chown -R www-data:www-data /var/www/
+RUN chmod -R 775 /var/www/writable/
 RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
-
 RUN echo "$DOTENV" > .env
-
 RUN composer install
 RUN php spark optimize
 
