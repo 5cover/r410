@@ -18,7 +18,7 @@ WORKDIR "/var/www"
 
 RUN chown -R www-data:www-data /var/www/
 RUN chmod -R ugo+w /var/www/writable/
-RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+RUN mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 RUN --mount=type=secret,id=DOTENV,mode=0444,required=true cp /run/secrets/DOTENV .env
 RUN composer install
 RUN php spark optimize
