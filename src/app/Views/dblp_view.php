@@ -10,7 +10,7 @@
 
 <body class="container mt-5">
     <main>
-        <h2 class="mb-4">Données DBLP pour <?= $author ?></h2>
+        <h2 class="mb-4">Données DBLP pour <?= $author['author'] // already escaped ?></h2>
 
         <h4>Profil DBLP :</h4>
         <p><a href="<?= esc($author['url']) ?>" target="_blank"><?= esc($author['url']) ?></a></p>
