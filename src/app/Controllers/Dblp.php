@@ -29,8 +29,8 @@ class Dblp extends BaseController
 
         // Passage des données à la vue
         return view('dblp_view', [
-            'author'       => $author_info,
-            'publications' => $publications
+            'author'       => $author_info['author'], // already escaped
+            'publications' => $publications,
         ]);
     }
 }
