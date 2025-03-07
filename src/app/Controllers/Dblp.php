@@ -3,11 +3,15 @@
 namespace App\Controllers;
 
 use App\Models\DblpModel;
+use App\Models\Pid;
+use DomainException;
 
-
-class Dblp extends BaseController {
-    public function author(string $name) {
+class Dblp extends BaseController
+{
+    function author(string $name)
+    {
         $model = model(DblpModel::class);
+        
 
         // Récupération des infos de l'auteur
         $author_data = $model->get_author_data($name);
@@ -17,17 +21,63 @@ class Dblp extends BaseController {
         }
 
         $author_info = $author_data['result']['hits']['hit'][0]['info'];
-        $author_id = basename($author_info['url']);
+
+        $pid = Pid::from_url($author_info['url']);
 
         // Récupération des publications
-        $publications = $model->get_publications($author_id);
+        $publications = $model->get_publications($pid);
 
         // Passage des données à la vue
-        $data = [
-            'author' => $author_info,
-            'publications' => $publications['r'] ?? []
-        ];
+        return view('dblp_view', [
+            'author'       => $author_info,
+            'publications' => $publications
+        ]);
+    }
+}
 
-        view('dblp_view', $data);
+readonly class Faker implements \ArrayAccess
+{
+    function __construct(private string $value) {}
+
+    function __get(string $name)
+    {
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    function offsetExists(mixed $offset): bool
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    function offsetGet(mixed $offset): mixed
+    {
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    function offsetSet(mixed $offset, mixed $value): void
+    {
+        throw new DomainException('read-only');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    function offsetUnset(mixed $offset): void
+    {
+        throw new DomainException('read-only');
+    }
+
+    function __tostring()
+    {
+        return $this->value;
     }
 }

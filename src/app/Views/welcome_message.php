@@ -249,6 +249,8 @@
 
     <pre><code>app/Controllers/Home.php</code></pre>
 
+    <a href="/dblp">TEST DBLP</a>
+
     <table>
         <thead>
             <tr>

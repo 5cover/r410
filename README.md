@@ -31,3 +31,8 @@ infos:
 
 - citations
 - ordre des auteurs important
+
+## Passer en mode développement/production
+
+- Changer dans le .env
+- Changer dans le mv php.ini dans le Dockerfile
