@@ -20,7 +20,7 @@ final readonly class CacheEntry
 
 final class Remote
 {
-    private const CACHE_FOR = 1800;  // 30 minutes
+    private const CACHE_FOR = 18000;  // 300 minutes
     private const TIMEOUT   = 5;
 
     private bool $is_online;
