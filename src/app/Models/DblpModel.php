@@ -44,7 +44,7 @@ final class DblpModel extends Model
             return new Article(
                 (string) $a->title,
                 (int) $a->year,
-                (string) $a->url
+                (string) $a->ee
             );
         }, $xml->xpath('/dblpperson/r/article'));
     }

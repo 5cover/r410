@@ -24,7 +24,7 @@
                     <li class="list-group-item">
                         <p><strong><?= esc($article->title ?? 'Titre inconnu') ?></strong></p>
                         <p><small>Année : <?= esc($article->year ?? 'N/A') ?></small></p>
-                        <p><a href="https://dblp.org/<?= esc($article->url ?? '#') ?>" target="_blank">Voir sur DBLP</a></p>
+                        <p><a href="<?= esc($article->url ?? '#') ?>" target="_blank">Voir sur DBLP</a></p>
                     </li>
                 <?php } ?>
             </ul>
