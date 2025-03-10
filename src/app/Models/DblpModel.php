@@ -50,18 +50,18 @@ final class Remote
 
         // Request the data
         if ($this->is_online || $t - $this->last_check_at > self::CACHE_FOR) {
-            $ctx = stream_context_create([
-                $protocol => ['timeout' => self::TIMEOUT]
+            $this->last_check_at = $t;
+            static $ctx = stream_context_create([
+                'http' => ['timeout' => self::TIMEOUT]
             ]);
             error_log("request $url\n");
             $data = @file_get_contents($url, context: $ctx);
+            $this->is_online = $data !== false;
         } else {
             $data = false;
         }
 
-        $this->last_check_at = $t;
-
-        if ($this->is_online = $data !== false) {
+        if ($data !== false) {
             // Store in CodeIgniter cache
             $this->cache->save($entryname, $data, self::CACHE_FOR);
         }
@@ -104,7 +104,6 @@ final class DblpModel extends Model
     private function query_api(string $path): string
     {
         if (!isset(self::$remotes)) {
-            error_log('init remotes');
             $cache         = \Config\Services::cache();
             $this->remotes = [
                 new Remote('dblp.org', $cache),
