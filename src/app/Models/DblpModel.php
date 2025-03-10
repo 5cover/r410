@@ -2,83 +2,34 @@
 
 namespace App\Models;
 
-use CodeIgniter\Cache\CacheInterface;
+use App\Helpers\Remote;
 use CodeIgniter\Model;
 use SimpleXMLElement;
 
-// todo: maintain state of dblp domains so we don't keep timeouting.
-// array domains [string, bool, long] : name, is_online, last_check
-// try again if last check was more than half an hour ago
-
-final readonly class CacheEntry
-{
-    function __construct(
-        public int $timestamp,
-        public string $data,
-    ) {}
-}
-
-final class Remote
-{
-    private const CACHE_FOR = 18000;  // 300 minutes
-    private const TIMEOUT   = 5;
-
-    private bool $is_online;
-    private int $last_check_at;
-    private CacheInterface $cache;
-
-    function __construct(
-        readonly string $domain,
-        CacheInterface $cache
-    ) {
-        $this->is_online     = true;
-        $this->last_check_at = time();
-        $this->cache         = $cache;
-    }
-
-    function request(string $protocol, string $right): string|false
-    {
-        $t         = time();
-        $entryname = 'dblp_cache' . md5("$this->domain:$protocol:$right");
-        $url       = "$protocol://$this->domain$right";
-
-        // Check CodeIgniter's cache first
-        if (($cached = $this->cache->get($entryname)) !== null) {
-            error_log("cached $url\n");
-            return $cached;
-        }
-
-        // Request the data
-        if ($this->is_online || $t - $this->last_check_at > self::CACHE_FOR) {
-            $this->last_check_at = $t;
-            static $ctx = stream_context_create([
-                'http' => ['timeout' => self::TIMEOUT]
-            ]);
-            error_log("request $url\n");
-            $data = @file_get_contents($url, context: $ctx);
-            $this->is_online = $data !== false;
-        } else {
-            $data = false;
-        }
-
-        if ($data !== false) {
-            // Store in CodeIgniter cache
-            $this->cache->save($entryname, $data, self::CACHE_FOR);
-        }
-
-        return $data;
-    }
-}
-
 final class DblpModel extends Model
 {
-    private const PROTOCOL = 'https';
+    private static ?array $remotes = null;
 
-    private ?array $remotes = null;
+    static function remotes(): array
+    {
+        if (self::$remotes === null) {
+            error_log('init dblp remotes');
+            $cache                  = \Config\Services::cache();
+            self::$remotes = [
+                new Remote('dblp.org', $cache),
+                new Remote('dblp.uni-trier.de', $cache),
+                new Remote('dblp2.uni-trier.de', $cache),
+                new Remote('dblp.dagstuhl.de', $cache),
+            ];
+        }
+        return self::$remotes;
+    }
+
+    private const PROTOCOL = 'https';
 
     public function get_author_data(string $author_name): array
     {
-        $response = $this->query_api('/search/author/api?format=json&q=' . urlencode($author_name));
+        $response = self::query_api('/search/author/api?format=json&q=' . urlencode($author_name));
         return json_decode($response, true);
     }
 
@@ -88,10 +39,13 @@ final class DblpModel extends Model
      */
     public function get_publications(string $author_id): array
     {
-        $xml = simplexml_load_string($this->query_api("/pid/$author_id.xml"));
+        $xml = simplexml_load_string(self::query_api("/pid/$author_id.xml"));
         return array_map(function (SimpleXMLElement $a) {
-            $o = json_decode(json_encode($a));
-            return new Article($o->title, $o->year, $o->url);
+            return new Article(
+                (string) $a->title,
+                (int) $a->year,
+                (string) $a->url
+            );
         }, $xml->xpath('/dblpperson/r/article'));
     }
 
@@ -101,19 +55,9 @@ final class DblpModel extends Model
      * @param string $path The path to the DBLP API endpoint.
      * @return string The response from the DBLP API in plain text
      */
-    private function query_api(string $path): string
+    private static function query_api(string $path): string
     {
-        if (!isset(self::$remotes)) {
-            $cache         = \Config\Services::cache();
-            $this->remotes = [
-                new Remote('dblp.org', $cache),
-                new Remote('dblp.uni-trier.de', $cache),
-                new Remote('dblp2.uni-trier.de', $cache),
-                new Remote('dblp.dagstuhl.de', $cache),
-            ];
-        }
-
-        foreach ($this->remotes as $remote) {
+        foreach (self::remotes() as $remote) {
             error_clear_last();
             $res = $remote->request(self::PROTOCOL, $path);
             if (false !== $res) return $res;
