@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Helpers\Remote;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -19,14 +20,29 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
-    /*
-     * public static function example($getShared = true)
-     * {
-     *     if ($getShared) {
-     *         return static::getSharedInstance('example');
-     *     }
-     *
-     *     return new \CodeIgniter\Example();
-     * }
-     */
+    private static ?array $dblp_remotes = null;
+
+    static function dblp_remotes(): array
+    {
+        if (self::$dblp_remotes === null) {
+            $cache              = \Config\Services::cache();
+            self::$dblp_remotes = [
+                new Remote('dblp.org', $cache),
+                new Remote('dblp.uni-trier.de', $cache),
+                new Remote('dblp2.uni-trier.de', $cache),
+                new Remote('dblp.dagstuhl.de', $cache),
+            ];
+        };
+        return self::$dblp_remotes;
+    }
+
+    static function dblp_domain(): string
+    {
+        foreach (self::dblp_remotes() as $r) {
+            if ($r->is_online) {
+                return $r->domain;
+            }
+        }
+        return self::dblp_remotes()[0]->domain;
+    }
 }

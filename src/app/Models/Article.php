@@ -7,5 +7,10 @@ final readonly class Article
         public ?string $title,
         public ?int $year,
         public ?string $url,
+
+        /**
+         * @var Author[]
+         */
+        public array $authors,
     ) {}
 }

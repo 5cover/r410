@@ -249,7 +249,7 @@
 
     <pre><code>app/Controllers/Home.php</code></pre>
 
-    <a href="/dblp">TEST DBLP</a>
+    <a href="/dblp/author/11/2374">TEST DBLP</a>
 
     <table>
         <thead>

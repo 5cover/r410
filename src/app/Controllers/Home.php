@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
-    public function index(): string
+    public function getIndex(): string
     {
         $db = db_connect();
         $db->simpleQuery("set schema 'main'");

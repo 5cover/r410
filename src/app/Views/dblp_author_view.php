@@ -10,21 +10,29 @@
 
 <body class="container mt-5">
     <main>
-        <h2 class="mb-4">Données DBLP pour <?= $author['author'] // already escaped ?></h2>
+        <h2 class="mb-4">Données DBLP pour <?= esc($author->name) ?></h2>
 
         <h4>Profil DBLP :</h4>
-        <p><a href="<?= esc($author['url']) ?>" target="_blank"><?= esc($author['url']) ?></a></p>
+        <p><a href="<?= esc($author->pid->to_url()) ?>" target="_blank">Voir sur DBLP</a></p>
 
-        <h3 class="mt-4">📚 Publications</h3>
-        <?php if (empty($publications)) { ?>
-            <p>Aucune publication trouvée.</p>
+        <h3 class="mt-4">📚 Articles</h3>
+        <?php if (empty($author->articles)) { ?>
+            <p>Aucun article trouvée.</p>
         <?php } else { ?>
             <ul class="list-group">
-                <?php foreach ($publications as /** @var \App\Models\Article */ $article) { ?>
+                <?php foreach ($author->articles as /** @var \App\Models\Article */ $article) { ?>
                     <li class="list-group-item">
                         <p><strong><?= esc($article->title ?? 'Titre inconnu') ?></strong></p>
                         <p><small>Année : <?= esc($article->year ?? 'N/A') ?></small></p>
                         <p><a href="<?= esc($article->url ?? '#') ?>" target="_blank">Voir sur DBLP</a></p>
+                        <details>
+                            <summary>Auteurs (<?= count($article->authors) ?>)</summary>
+                            <ol>
+                                <?php foreach ($article->authors as $a) { ?>
+                                    <li><p><a href="/dblp/author/<?= esc($a->pid) ?>"><?= esc($a->name) ?></a></p></li>
+                                <?php } ?>
+                            </ol>
+                        </details>
                     </li>
                 <?php } ?>
             </ul>
