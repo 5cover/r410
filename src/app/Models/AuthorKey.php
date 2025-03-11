@@ -1,14 +1,10 @@
 <?php
 namespace App\Models;
-final readonly class AuthorInfo
+
+final readonly class AuthorKey
 {
     function __construct(
         public string $name,
         public Pid $pid,
-
-        /**
-         * @var Article[]
-         */
-        public array $articles
     ) {}
 }

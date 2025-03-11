@@ -1,3 +1,15 @@
+<?php
+use App\Models\Author;
+use App\Models\AuthorKey;
+use App\Models\NoteType;
+
+assert($author instanceof Author);
+
+function author_url(AuthorKey $key)
+{
+    return '/dblp/author/' . $key->pid->encode();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -10,17 +22,53 @@
 
 <body class="container mt-5">
     <main>
-        <h2 class="mb-4">Données DBLP pour <?= esc($author->name) ?></h2>
+        <h1 class="mb-4"><?= esc($author->key->name) ?></h1>
 
-        <h4>Profil DBLP :</h4>
-        <p><a href="<?= esc($author->pid->to_url()) ?>" target="_blank">Voir sur DBLP</a></p>
+        <p><a href="<?= esc($author->key->pid->to_dblp_url()) ?>" target="_blank">Voir sur DBLP</a></p>
 
-        <h3 class="mt-4">📚 Articles</h3>
+        <h2>Profil</h2>
+        <ul>
+            <?php foreach ($author->notes as $note) { ?>
+                <li>
+                    <?= match ($note->type) {
+                        NoteType::Affiliation => 'Affilié à :',
+                        NoteType::Award       => '🏆',
+                        NoteType::IsNot       => 'À ne pas confondre avec :',
+                    } . " $note->value" . ($note->label ? " ($note->label)" : '') ?>
+                </li>
+            <?php } ?>
+        </ul>
+
+        <?php
+        $coauthors_frequency = [];
+        foreach ($author->articles as $article) {
+            foreach ($article->authors as $author_key) {
+                $key                         = (string) $author_key->pid;
+                $coauthors_frequency[$key] ??= [$author_key, 0];
+                $coauthors_frequency[$key][1]++;
+            }
+        }
+        usort($coauthors_frequency, fn($a, $b) => $b[1] - $a[1]);
+        array_shift($coauthors_frequency);  // most frequent coauthor is always the author themselves
+        ?>
+        <h2>Co-auteurs</h2>
+        <details>
+            <summary><?= count($coauthors_frequency) ?> éléments</summary>
+            <ol>
+                <?php
+                foreach ($coauthors_frequency as [$key, $frequency]) {
+                    ?><li><a href="<?= author_url($key) ?>"><?= esc($key->name) ?></a> (<?= $frequency ?> apparitions)</a></li><?php
+                }
+                ?>
+            </ol>
+        </details>
+
+        <h2 class="mt-4">Articles (<?= count($author->articles) ?>)</h2>
         <?php if (empty($author->articles)) { ?>
             <p>Aucun article trouvée.</p>
         <?php } else { ?>
             <ul class="list-group">
-                <?php foreach ($author->articles as /** @var \App\Models\Article */ $article) { ?>
+                <?php foreach ($author->articles as $article) { ?>
                     <li class="list-group-item">
                         <p><strong><?= esc($article->title ?? 'Titre inconnu') ?></strong></p>
                         <p><small>Année : <?= esc($article->year ?? 'N/A') ?></small></p>
@@ -29,7 +77,7 @@
                             <summary>Auteurs (<?= count($article->authors) ?>)</summary>
                             <ol>
                                 <?php foreach ($article->authors as $a) { ?>
-                                    <li><p><a href="/dblp/author/<?= esc($a->pid) ?>"><?= esc($a->name) ?></a></p></li>
+                                    <li><a href="<?= author_url($a) ?>"><?= esc($a->name) ?></a></li>
                                 <?php } ?>
                             </ol>
                         </details>

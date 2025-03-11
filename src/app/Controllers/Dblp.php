@@ -8,7 +8,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 class Dblp extends BaseController
 {
-    function getAuthor(string $pidLeft, string $pidRight)
+    function getAuthor(string $encoded_pid)
     {
         $model = model(DblpModel::class);
 
@@ -16,7 +16,7 @@ class Dblp extends BaseController
 
         // Récupération des publications
         try {
-            $author_info = $model->get_author_info(new Pid($pidLeft, $pidRight));
+            $author_info = $model->get_author_info(Pid::decode($encoded_pid));
         } catch (HTTPException $e) {
             return view('error_view', [
                 'e' => $e,

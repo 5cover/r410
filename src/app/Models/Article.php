@@ -9,7 +9,7 @@ final readonly class Article
         public ?string $url,
 
         /**
-         * @var Author[]
+         * @var AuthorKey[]
          */
         public array $authors,
     ) {}

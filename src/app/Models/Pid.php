@@ -5,28 +5,28 @@ namespace App\Models;
 final readonly class Pid
 {
     function __construct(
-        public string $part1,
-        public string $part2,
-    ) {}
-
-    static function from_url(string $url)
-    {
-        $author_url_paths = explode('/', parse_url($url, PHP_URL_PATH), 4);
-        return new Pid((int) $author_url_paths[2], (int) $author_url_paths[3]);
+        private readonly string $value,
+    ) {
+        assert(preg_match('/^[a-zA-Z0-9/-]+$/', $value) === 1);
     }
 
-    static function from_string(string $pid)
+    static function decode(string $encoded_value)
     {
-        return new Pid(...explode('/', $pid, 2));
+        return new Pid(str_replace('_', '/', $encoded_value));
     }
 
-    function to_url(): string
+    function encode(): string
+    {
+        return str_replace('/', '_', $this->value);
+    }
+
+    function to_dblp_url(): string
     {
         return 'https://' . \Config\Services::dblp_domain() . '/pid/' . $this;
     }
 
     function __tostring()
     {
-        return "$this->part1/$this->part2";
+        return $this->value;
     }
 }

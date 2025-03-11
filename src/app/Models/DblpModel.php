@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Author;
-use App\Models\AuthorInfo;
 use App\Models\Article;
+use App\Models\Author;
+use App\Models\AuthorKey;
+use App\Models\Note;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Model;
+use Exception;
 use SimpleXMLElement;
 
 final class DblpModel extends Model
@@ -27,24 +29,30 @@ final class DblpModel extends Model
 
     /**
      * @param Pid $pid
-     * @return AuthorInfo
+     * @return Author
      *
      * @throws HTTPException
      */
-    function get_author_info(Pid $pid): AuthorInfo
+    function get_author_info(Pid $pid): Author
     {
         $xml = simplexml_load_string(self::query_api("/pid/$pid.xml"));
-        return new AuthorInfo(
-            $xml->attributes()->name,
-            $pid,
-            array_map(function (SimpleXMLElement $p) {
-                return new Article(
-                    (string) $p->title,
-                    (int) $p->year,
-                    (string) $p->ee,
-                    array_map(fn($a) => new Author($a, $a['pid']), $p->xpath('./author')),
-                );
-            }, $xml->xpath('/dblpperson/r/article')),
+        return new Author(
+            new AuthorKey($xml->attributes()->name, $pid),
+            array_map(fn(SimpleXMLElement $p) => new Article(
+                (string) $p->title,
+                (int) $p->year,
+                (string) $p->ee,
+                array_map(fn($a) => new AuthorKey($a, new Pid($a['pid'])), $p->xpath('./author')),
+            ), $xml->xpath('/dblpperson/r/article')),
+            array_map(fn(SimpleXMLElement $n) => new Note(
+                match ((string)$n->attributes()->type) {
+                    'affiliation' => NoteType::Affiliation,
+                    'award'       => NoteType::Award,
+                    'isnot'       => NoteType::IsNot,
+                },
+                $n,
+                $n->attributes()->label ?? null,
+            ), $xml->xpath('/dblpperson/person/note')),
         );
     }
 
