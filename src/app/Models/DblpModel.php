@@ -72,7 +72,7 @@ final class Remote
 
 final class DblpModel extends Model
 {
-    private const PROTOCOL = 'https';
+    private const PROTOCOL = 'http';
 
     private ?array $remotes = null;
 
