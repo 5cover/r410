@@ -22,7 +22,7 @@ final readonly class Pid
 
     function to_url(): string
     {
-        return \Config\Services::dblp_domain() . $this;
+        return 'https://' . \Config\Services::dblp_domain() . '/pid/' . $this;
     }
 
     function __tostring()
