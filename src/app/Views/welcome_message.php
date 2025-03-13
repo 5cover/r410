@@ -231,24 +231,14 @@
 
 </header>
 
-<!-- CONTENT -->
-
 <section>
 
     <h1>About this page</h1>
 
     <details><summary>VERSION CURL</summary><pre><?= esc(var_export(curl_version(), true)) ?></pre></detail>
 
-    <p>If you would like to edit this page you will find it located at:</p>
-
-    <pre><code>app/Views/welcome_message.php</code></pre>
-
-    <p>The corresponding controller for this page can be found at:</p>
-
-    <pre><code>app/Controllers/Home.php</code></pre>
-
-    <a href="/dblp/author/11_2374">TEST DBLP</a>
-    <a href="/test-db">TEST DB</a>
+    <p><a href="/dblp/author/11_2374">TEST DBLP</a></p>
+    <p><a href="/test-db">TEST DB</a></p>
 
 </section>
 
