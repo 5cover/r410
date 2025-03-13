@@ -7,7 +7,7 @@ final readonly class Pid
     function __construct(
         private readonly string $value,
     ) {
-        assert(preg_match('/^[a-zA-Z0-9/-]+$/', $value) === 1);
+        assert(preg_match('/^[a-zA-Z0-9\/-]+$/', $value) === 1);
     }
 
     static function decode(string $encoded_value)
