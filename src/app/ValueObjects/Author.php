@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\ValueObjects;
 
 final readonly class Author
 {

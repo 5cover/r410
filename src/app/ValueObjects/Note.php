@@ -1,7 +1,7 @@
 <?php
-namespace App\Models;
+namespace App\ValueObjects;
 
-use App\Models\NoteType;
+use App\ValueObjects\NoteType;
 
 final readonly class Note
 {

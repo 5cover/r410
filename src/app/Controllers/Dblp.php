@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\DblpModel;
-use App\Models\Pid;
+use App\ValueObjects\Pid;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 class Dblp extends BaseController

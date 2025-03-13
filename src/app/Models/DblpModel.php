@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Article;
-use App\Models\Author;
-use App\Models\AuthorKey;
-use App\Models\Note;
-use App\Models\NoteType;
+use App\ValueObjects\Article;
+use App\ValueObjects\Author;
+use App\ValueObjects\AuthorKey;
+use App\ValueObjects\Note;
+use App\ValueObjects\Pid;
+use App\ValueObjects\NoteType;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Model;
 use SimpleXMLElement;

@@ -1,7 +1,7 @@
 <?php
-use App\Models\Author;
-use App\Models\AuthorKey;
-use App\Models\NoteType;
+use App\ValueObjects\Author;
+use App\ValueObjects\AuthorKey;
+use App\ValueObjects\NoteType;
 
 assert($author instanceof Author);
 
