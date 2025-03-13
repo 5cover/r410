@@ -239,7 +239,7 @@
 
     <h1>About this page</h1>
 
-    <summary><details>VERSION CURL</details><pre><?= esc(var_export(curl_version(), true)) ?></pre></summary>
+    <details><summary>VERSION CURL</summary><pre><?= esc(var_export(curl_version(), true)) ?></pre></detail>
 
     <p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 
