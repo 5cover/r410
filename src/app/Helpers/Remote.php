@@ -71,6 +71,7 @@ final class Remote
                 $errno = curl_errno($ch);
 
                 if ($errno !== 0) {
+                    error_log('curl error: ' . curl_strerror($errno));
                     $data = false;
                 } else {
                     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
