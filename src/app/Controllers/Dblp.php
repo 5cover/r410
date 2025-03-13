@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\DblpModel;
+use App\Models\OrcIdModel;
 use App\ValueObjects\Pid;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
@@ -10,7 +11,8 @@ class Dblp extends BaseController
 {
     function getAuthor(string $encoded_pid)
     {
-        $model = model(DblpModel::class);
+        $model       = model(DblpModel::class);
+        $orcid_model = model(OrcIdModel::class);
 
         // Récupération des infos de l'auteur
 
@@ -25,7 +27,8 @@ class Dblp extends BaseController
 
         // Passage des données à la vue
         return view('dblp_author_view', [
-            'author' => $author_info,
+            'author'       => $author_info,
+            'affiliations' => $author_info->key->orcid === null ? [] : $orcid_model->get_affiliations($author_info->key->orcid),
         ]);
     }
 }

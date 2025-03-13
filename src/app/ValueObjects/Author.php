@@ -14,6 +14,6 @@ final readonly class Author
         /**
          * @var Note[]
          */
-        public array $notes
+        public array $notes,
     ) {}
 }

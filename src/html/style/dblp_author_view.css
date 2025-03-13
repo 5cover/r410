@@ -1,0 +1,40 @@
+.timeline {
+    position: relative;
+    margin: 20px 0;
+    padding-left: 20px;
+    border-left: 3px solid #007bff;
+}
+
+.timeline h3 {
+    font-size: 1.33em;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: #007bff;
+    border-radius: 50%;
+}
+
+.timeline-date {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+}
+
+.timeline-content {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

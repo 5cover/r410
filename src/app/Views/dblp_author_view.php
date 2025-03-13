@@ -18,6 +18,7 @@ function author_url(AuthorKey $key)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auteur et Publications - DBLP</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style/dblp_author_view.css">
 </head>
 
 <body class="container mt-5">
@@ -35,18 +36,37 @@ function author_url(AuthorKey $key)
                 <li>
                     <?= match ($note->type) {
                         NoteType::Affiliation => 'Affilié à :',
-                        NoteType::Award       => '🏆',
-                        NoteType::IsNot       => 'À ne pas confondre avec :',
+                        NoteType::Award => '🏆',
+                        NoteType::IsNot => 'À ne pas confondre avec :',
                     } . " $note->value" . ($note->label ? " ($note->label)" : '') ?>
                 </li>
             <?php } ?>
         </ul>
 
+        <?php if ($affiliations) { ?>
+            <h2>Historique</h2>
+            <div class="timeline">
+                <?php foreach ($affiliations as /** @var \App\ValueObjects\Affiliation */ $a) { ?>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <?= $a->start_year ?> &ndash; <?= $a->end_year ?? 'Présent' ?>
+                        </div>
+                        <div class="timeline-content">
+                            <h3><?= esc($a->role) ?></h3>
+                            <p><strong><?= esc($a->institution) ?></strong></p>
+                            <p><?= esc($a->city) ?>, <?= esc($a->country) ?></p>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+            </div>
+        <?php } ?>
+
         <?php
         $coauthors_frequency = [];
         foreach ($author->articles as $article) {
             foreach ($article->authors as $author_key) {
-                $key                         = (string) $author_key->pid;
+                $key = (string) $author_key->pid;
                 $coauthors_frequency[$key] ??= [$author_key, 0];
                 $coauthors_frequency[$key][1]++;
             }
@@ -60,7 +80,8 @@ function author_url(AuthorKey $key)
             <ol>
                 <?php
                 foreach ($coauthors_frequency as [$key, $frequency]) {
-                    ?><li><a href="<?= author_url($key) ?>"><?= esc($key->name) ?></a> (<?= $frequency ?> apparitions)</a></li><?php
+                    ?>
+                    <li><a href="<?= author_url($key) ?>"><?= esc($key->name) ?></a> (<?= $frequency ?> apparitions)</a></li><?php
                 }
                 ?>
             </ol>
