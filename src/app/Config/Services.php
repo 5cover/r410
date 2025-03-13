@@ -25,7 +25,7 @@ class Services extends BaseService
     static function dblp_remotes(): array
     {
         if (self::$dblp_remotes === null) {
-            $cache              = \Config\Services::cache();
+            $cache              = Services::cache();
             self::$dblp_remotes = [
                 new Remote('dblp.org', $cache),
                 new Remote('dblp.uni-trier.de', $cache),
@@ -44,5 +44,12 @@ class Services extends BaseService
             }
         }
         return self::dblp_remotes()[0]->domain;
+    }
+
+    private static ?Remote $orcid_remote = null;
+
+    static function orcid_remote(): Remote
+    {
+        return self::$orcid_remote ??= new Remote('pub.orcid.org', Services::cache());
     }
 }
