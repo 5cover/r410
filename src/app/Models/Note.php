@@ -1,12 +1,7 @@
 <?php
 namespace App\Models;
 
-enum NoteType
-{
-    case Affiliation;
-    case Award;
-    case IsNot;
-}
+use App\Models\NoteType;
 
 final readonly class Note
 {

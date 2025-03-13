@@ -27,6 +27,9 @@ function author_url(AuthorKey $key)
         <p><a href="<?= esc($author->key->pid->to_dblp_url()) ?>" target="_blank">Voir sur DBLP</a></p>
 
         <h2>Profil</h2>
+        <?php if ($author->key->orcid) { ?>
+            <p>ORCID : <code><?= $author->key->orcid ?></code></p>
+        <?php } ?>
         <ul>
             <?php foreach ($author->notes as $note) { ?>
                 <li>
