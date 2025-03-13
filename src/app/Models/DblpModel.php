@@ -11,7 +11,7 @@ use SimpleXMLElement;
 
 final class DblpModel extends Model
 {
-    private const PROTOCOL = 'http';
+    private const PROTOCOL = 'https';
 
     /**
      * Summary of search_author_name
