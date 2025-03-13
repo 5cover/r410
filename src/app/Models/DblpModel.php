@@ -47,6 +47,17 @@ final class DblpModel extends Model
             }
         }
 
+        $notes = [];
+        foreach ($xml->xpath('/dblpperson/person/note') as $n) {
+            $type = match ((string) $n->attributes()->type) {
+                'affiliation' => NoteType::Affiliation,
+                'award'       => NoteType::Award,
+                'isnot'       => NoteType::IsNot,
+                default       => null,
+            };
+            if ($type !== null) $notes[] = new Note($type, $n, $n->attributes()->label ?? null);
+        }
+
         return new Author(
             new AuthorKey($xml->attributes()->name, $pid, $orcid),
             array_map(fn(SimpleXMLElement $p) => new Article(
@@ -58,15 +69,7 @@ final class DblpModel extends Model
                     $p->xpath('./author'),
                 ),
             ), $xml->xpath('/dblpperson/r/article')),
-            array_map(function (SimpleXMLElement $n) {
-                $type = match ((string) $n->attributes()->type) {
-                    'affiliation' => NoteType::Affiliation,
-                    'award'       => NoteType::Award,
-                    'isnot'       => NoteType::IsNot,
-                    default       => null,
-                };
-                return $type === null ? null : new Note($type, $n, $n->attributes()->label ?? null);
-            }, $xml->xpath('/dblpperson/person/note')),
+            $notes,
         );
     }
 
