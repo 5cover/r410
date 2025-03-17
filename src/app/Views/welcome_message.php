@@ -50,7 +50,12 @@
 
     <h2>About this page</h2>
 
-    <details><summary>VERSION CURL</summary><pre><?= esc(var_export(curl_version(), true)) ?></pre></details>
+    <details>
+    <summary>VERSION CURL</summary>
+        <pre>
+            <?= esc(var_export(curl_version(), true)) ?>
+        </pre>
+    </details>
 
     <p><a href="/dblp/author/11_2374">TEST DBLP</a></p>
     <p><a href="/test-db">TEST DB</a></p>
