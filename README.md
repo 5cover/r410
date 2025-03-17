@@ -77,3 +77,14 @@ infos:
   ]
 }
 ```
+
+## Hal
+
+<https://api.archives-ouvertes.fr/search/IRISA/>
+
+todo: build map for irisa collaborations
+
+1. read countries csv
+2. read collaborations csv
+3. map countries to lat/lon
+4. add sized circles to map on the center of each country

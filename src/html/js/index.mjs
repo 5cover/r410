@@ -25,7 +25,7 @@ const coordinates = new Map();
 for (const [name, city_country] of people) {
     let coords = coordinates.get(city_country);
     if (!coords) {
-        coords = await get_coordinates(...city_country.split(', '));
+        coords = await get_coordinates(...city_country.split(', ', 2));
         coordinates.set(city_country, coords);
     }
     // if null fetch api
