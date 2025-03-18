@@ -16,28 +16,18 @@ IRISA research.
 
 Pour exécuter le projet `/src$ php spark serve`
 
-Todo:
+## Todo
 
-## Setup DB on 413 ventsdouest (test locally)
+###
+
+<https://globe.gl/>
+
+### Setup DB on 413 ventsdouest (test locally)
 
 - ventsdouest SSH publickey
 - db creation script
 
-## Setup env file on remote
-
-## todo
-
-infos:
-
-- citations
-- ordre des auteurs important
-
-## Passer en mode développement/production
-
-- Changer dans le .env
-- Changer dans le mv php.ini dans le Dockerfile
-
-## gouv gelocoding fr api
+### gouv gelocoding fr api
 
 `$ curl "https://api-adresse.data.gouv.fr/search/?q=LIFL+Lille+France&limit=1"`
 
@@ -78,7 +68,7 @@ infos:
 }
 ```
 
-## Hal
+### Hal
 
 <https://api.archives-ouvertes.fr/search/IRISA/>
 

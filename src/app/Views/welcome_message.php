@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to CodeIgniter 4!</title>
+    <title><?= esc(PROG) ?></title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
@@ -20,48 +21,39 @@
 
     <div class="menu">
         <ul>
-            
-            <li class="menu-toggle">
-                <button id="menuToggle">&#9776;</button>
-            </li>
+            <li class="menu-toggle"><button id="menuToggle">&#9776;</button></li>
             <li class="menu-item hidden"><a href="#">Accueil</a></li>
-            <li class="menu-item hidden"><a href="https://www.irisa.fr" target="_blank">IRISA</a>
-            </li>
+            <li class="menu-item hidden"><a href="https://www.irisa.fr" target="_blank">IRISA</a></li>
             <li class="menu-item hidden"><a href="https://forum.codeigniter.com/" target="_blank">Community</a></li>
-            <li class="menu-item hidden"><a
-                    href="https://codeigniter.com/contribute" target="_blank">Contribute</a>
-            </li>
+            <li class="menu-item hidden"><a href="https://codeigniter.com/contribute" target="_blank">Contribute</a></li>
         </ul>
     </div>
 
     <div class="heroe">
-
-        <h1>Explorateur de l'IRISA</h1>
-
-        <div id="map">
-
-        </div>
-
+        <h1><?= esc(PROG) ?></h1>
+        <div id="map"></div>
     </div>
 
 </header>
 
 <section>
+    <h2>Auteurs</h2>
+    <p><a href="/dblp/author/11_2374">Laurent d'Orazio</a></p>
 
-    <h2>About this page</h2>
+    
+</section>
 
-    <details>
+<!--
+<details>
     <summary>VERSION CURL</summary>
         <pre>
-            <?= esc(var_export(curl_version(), true)) ?>
+        <?= esc(var_export(curl_version(), true)) ?>
         </pre>
     </details>
 
-    <p><a href="/dblp/author/11_2374">TEST DBLP</a></p>
+    
     <p><a href="/test-db">TEST DB</a></p>
-
-</section>
-
+-->
 
 <!-- FOOTER: DEBUG INFO + COPYRIGHTS -->
 
@@ -95,8 +87,6 @@
         }
     }
 </script>
-
-<!-- -->
 
 </body>
 </html>
