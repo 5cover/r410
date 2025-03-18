@@ -31,7 +31,13 @@
 
     <div class="heroe">
         <h1><?= esc(PROG) ?></h1>
-        <div id="map"></div>
+        <p><strong id="span-publication-count"></strong> articles</p>
+        <figure>
+            <div id="map"></div>
+            <figcaption>
+                Nombre de collobrations avec l'IRISA par pays
+            </figcaption>
+        </figure>
     </div>
 
 </header>

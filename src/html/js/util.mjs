@@ -37,3 +37,13 @@ export function parseCsv(str) {
     arr.shift(); // Remove header row
     return arr;
 }
+
+/**
+ * @param {string} id 
+ * @returns {HTMLElement}
+ */
+export function requireElementById(id) {
+    const e = document.getElementById(id);
+    if (e === null) throw new Error(`Missing element id '${id}'`);
+    return e;
+}
