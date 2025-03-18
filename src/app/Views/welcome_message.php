@@ -65,7 +65,7 @@
 
 <footer>
     <div class="environment">
-
+        <p><a href="https://github.com/5cover/r410" target="_blank" rel="noopener noreferrer">Dépôt GitHub</a></p>
         <p>Page rendered in {elapsed_time} seconds using {memory_usage} MB of memory.</p>
 
         <p>Environment: <?= ENVIRONMENT ?></p>
