@@ -6,6 +6,7 @@ colorTo: indigo
 sdk: docker
 pinned: false
 short_description: Serveur web pour R410
+license: mit
 build:
   no_cache: true
 ---
