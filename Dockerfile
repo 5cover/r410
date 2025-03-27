@@ -2,10 +2,12 @@ FROM php:8.3-cli-alpine
 
 # Install necessary dependencies
 RUN apk add --no-cache \
-    libpq icu-libs icu-data-full icu-dev \
-    git curl unzip
-
-RUN docker-php-ext-install intl pgsql
+    postgresql-dev \
+    icu-dev \
+    libpq \
+    git \
+    curl \
+    unzip && docker-php-ext-install intl pgsql
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -14,9 +16,6 @@ WORKDIR /var/www
 
 # Copy only composer files first to leverage cache
 COPY ./src/composer.json ./src/composer.lock ./
-
-# Install dependencies (CodeIgniter will optimize during php spark anyway)
-RUN composer install --no-dev --no-scripts --optimize-autoloader --no-progress
 
 # Copy app source code
 COPY ./src ./
