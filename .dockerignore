@@ -1,2 +1,9 @@
-vendor/
 .git
+.gitignore
+node_modules
+vendor
+tests
+.env
+*.log
+Dockerfile
+README.md
