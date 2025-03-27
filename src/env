@@ -30,11 +30,11 @@ CI_ENVIRONMENT = development
 # DATABASE
 #--------------------------------------------------------------------
 
-database_default_hostname = #localhost
-database_default_database = #XXXXXXXXXXXXXXXXXX
-database_default_username = #XXXXXXXXXXXXXXXXXX
-database_default_password = #XXXXXXXXXXXXXXXXXX
-database_default_DBDriver = #Postgre
+#database_default_hostname = localhost
+#database_default_database = XXXXXXXXXXXXXXXXXX
+#database_default_username = XXXXXXXXXXXXXXXXXX
+#database_default_password = XXXXXXXXXXXXXXXXXX
+#database_default_DBDriver = Postgre
 database_default_DBPrefix =
 database_default_port = 5432
 database_default_charset = utf8
