@@ -5,8 +5,7 @@ RUN apk add --no-cache \
     libpq icu-libs icu-data-full icu-dev \
     git curl unzip
 
-# pgsql: disabled.
-RUN docker-php-ext-install intl
+RUN docker-php-ext-install intl pgsql
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
