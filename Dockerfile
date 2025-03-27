@@ -25,7 +25,7 @@ RUN chown -R www-data:www-data /var/www && chmod -R ugo+w /var/www/writable
 
 # Env file
 # RUN --mount=type=secret,id=DOTENV,mode=0444,required=true cp /run/secrets/DOTENV .env
-COPY ./src/.env.example .env
+COPY ./src/env .env
 
 # Optimize CodeIgniter
 RUN php spark optimize || echo "spark optimize failed"
