@@ -1,10 +1,9 @@
 FROM php:8.3-cli-alpine
 
 # Install necessary dependencies
-RUN apk add --no-cache \
-    libpq icu-libs icu-data-full icu-dev \
-    git curl unzip \
-    && docker-php-ext-install pgsql intl
+RUN apt-get update && apt-get install -y libpq-dev curl unzip git libicu-dev
+
+RUN docker-php-ext-install pgsql intl
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
