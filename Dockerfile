@@ -3,7 +3,7 @@ FROM php:8.3-cli-alpine
 # Install necessary dependencies
 RUN apk add --no-cache \
     libpq icu-libs icu-data-full icu-dev \
-    git curl unzip \
+    git curl unzip
 
 # pgsql: disabled.
 RUN docker-php-ext-install intl
