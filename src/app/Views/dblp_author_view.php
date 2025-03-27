@@ -19,6 +19,7 @@ function author_url(AuthorKey $key)
     <title>Auteur et Publications - DBLP</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/style/dblp_author_view.css">
+    <link rel="stylesheet" href="/style/index.css">
 </head>
 
 <body class="container mt-5">
