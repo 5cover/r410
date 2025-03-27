@@ -42,34 +42,28 @@
 
 </header>
 
-<section>
-    <h2>Auteurs</h2>
-    <p><a href="/dblp/author/97_947">Olivier Barais</a></p>
-    <p><a href="/dblp/author/94_2593">Jalil Boukhobza</a></p>
-    <p><a href="/dblp/author/87_3974">Sandro Bimonte</a></p>
-    <p><a href="/dblp/author/269_2155">Mohamed Handaoui</a></p>
-    <p><a href="/dblp/author/153_7542">Jean-Emile Dartois</a></p>
-    <p><a href="/dblp/author/41_2927">Julien Lallet</a></p>
-    <p><a href="/dblp/author/138_1224">Romain Perriot</a></p>
-    <p><a href="/dblp/author/11_2374">Laurent d'Orazio</a></p>
-</section>
+<main>
+    <section>
+        <h2>Auteurs</h2>
+        <p><a href="/dblp/author/97_947">Olivier Barais</a></p>
+        <p><a href="/dblp/author/94_2593">Jalil Boukhobza</a></p>
+        <p><a href="/dblp/author/87_3974">Sandro Bimonte</a></p>
+        <p><a href="/dblp/author/269_2155">Mohamed Handaoui</a></p>
+        <p><a href="/dblp/author/153_7542">Jean-Emile Dartois</a></p>
+        <p><a href="/dblp/author/41_2927">Julien Lallet</a></p>
+        <p><a href="/dblp/author/138_1224">Romain Perriot</a></p>
+        <p><a href="/dblp/author/11_2374">Laurent d'Orazio</a></p>
+    </section>
+</main>
 
 <footer>
     <div class="environment">
         <p><a href="https://github.com/5cover/r410" target="_blank" rel="noopener noreferrer">Dépôt GitHub</a></p>
-        <p>Page rendered in {elapsed_time} seconds using {memory_usage} MB of memory.</p>
-
-        <p>Environment: <?= ENVIRONMENT ?></p>
-
     </div>
-
     <div class="copyrights">
-
         <p>&copy; <?= date('Y') ?> CodeIgniter Foundation. CodeIgniter is open source project released under the MIT
             open source licence.</p>
-
     </div>
-
 </footer>
 
 <!-- SCRIPTS -->

@@ -22,6 +22,17 @@ function author_url(AuthorKey $key)
 </head>
 
 <body class="container mt-5">
+    <header>
+        <div class="menu">
+            <ul>
+                <li class="menu-toggle"><button id="menuToggle">&#9776;</button></li>
+                <li class="menu-item hidden"><a href="/">Accueil</a></li>
+                <li class="menu-item hidden"><a href="https://www.irisa.fr" target="_blank">IRISA</a></li>
+                <li class="menu-item hidden"><a href="https://forum.codeigniter.com/" target="_blank">Community</a></li>
+                <li class="menu-item hidden"><a href="https://codeigniter.com/contribute" target="_blank">Contribute</a></li>
+            </ul>
+        </div>
+    </header>
     <main>
         <h1 class="mb-4"><?= esc($author->key->name) ?></h1>
 
@@ -36,8 +47,8 @@ function author_url(AuthorKey $key)
                 <li>
                     <?= match ($note->type) {
                         NoteType::Affiliation => 'Affilié à :',
-                        NoteType::Award => '🏆',
-                        NoteType::IsNot => 'À ne pas confondre avec :',
+                        NoteType::Award       => '🏆',
+                        NoteType::IsNot       => 'À ne pas confondre avec :',
                     } . " $note->value" . ($note->label ? " ($note->label)" : '') ?>
                 </li>
             <?php } ?>
@@ -66,7 +77,7 @@ function author_url(AuthorKey $key)
         $coauthors_frequency = [];
         foreach ($author->articles as $article) {
             foreach ($article->authors as $author_key) {
-                $key = (string) $author_key->pid;
+                $key                         = (string) $author_key->pid;
                 $coauthors_frequency[$key] ??= [$author_key, 0];
                 $coauthors_frequency[$key][1]++;
             }
@@ -110,6 +121,15 @@ function author_url(AuthorKey $key)
             </ul>
         <?php } ?>
     </main>
+    <footer>
+    <div class="environment">
+        <p><a href="https://github.com/5cover/r410" target="_blank" rel="noopener noreferrer">Dépôt GitHub</a></p>
+    </div>
+    <div class="copyrights">
+        <p>&copy; <?= date('Y') ?> CodeIgniter Foundation. CodeIgniter is open source project released under the MIT
+            open source licence.</p>
+    </div>
+</footer>
 </body>
 
 </html>
