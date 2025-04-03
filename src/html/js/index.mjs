@@ -7,6 +7,8 @@ const map = L.map('map').setView([46, 2], 4);
 
 const span_publication_count = requireElementById('span-publication-count');
 
+const table_collaborations = requireElementById('table-collaborations');
+
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -31,7 +33,12 @@ for (const [country_code, n_publications] of irisa_collaborations) {
         color: colorPalette[i++ % colorPalette.length],
 
     }).addTo(map);
-    obj.bindTooltip(`${get_country_name(country_code)} (${n_publications})`);
+    const country_name = get_country_name(country_code);
+    obj.bindTooltip(`${country_name} (${n_publications})`);
+
+    const tr = table_collaborations.insertRow();
+    tr.insertCell().textContent = country_name;
+    tr.insertCell().textContent = n_publications;
 }
 
 span_publication_count.textContent = n_publications_total.toString();

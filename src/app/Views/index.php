@@ -9,6 +9,15 @@
             </figcaption>
         </figure>
     </div>
+    <table>
+        <thead>
+            <th>Pays</th>
+            <th>Nombre de collaborations</th>
+        </thead>
+        <tbody id="table-collaborations">
+
+        </tbody>
+    </table>
     <section>
         <h2>Auteurs</h2>
         <p><a href="/dblp/author/97_947">Olivier Barais</a></p>
