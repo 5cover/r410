@@ -8,8 +8,8 @@ class TestDb extends BaseController
     {
         $db = db_connect();
         $db->simpleQuery("set schema 'main'");
-
-        return view('test_db', [
+        
+        return view('head_header') . view('test_db', [
             'q1' => $db->query(<<<SQL
 select
     country,
@@ -76,6 +76,6 @@ order by
 limit
     1;
 SQL)->getRow(),
-        ]);
+        ]). view('footer');
     }
 }

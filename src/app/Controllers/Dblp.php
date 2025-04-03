@@ -24,11 +24,15 @@ class Dblp extends BaseController
                 'e' => $e,
             ]);
         }
-
         // Passage des données à la vue
-        return view('dblp_author_view', [
+        return view('head_header', [
+            'stylesheets' => [
+                'css/base.css',
+                'css/dblp_author.css',
+            ],
+        ]) . view('dblp_author', [
             'author'       => $author_info,
             'affiliations' => $author_info->key->orcid === null ? [] : $orcid_model->get_affiliations($author_info->key->orcid),
-        ]);
+        ]) . view('footer');
     }
 }

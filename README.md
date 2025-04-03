@@ -17,6 +17,10 @@ IRISA research.
 
 Pour exécuter le projet `/src$ php spark serve`
 
+## Liens
+
+IRISA: <https://univ-rennes.hal.science/IRISA> (sous-site de HAL)
+
 ## Todo
 
 ###
