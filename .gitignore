@@ -1,3 +1,3 @@
 doc/11_2374.xml
-src/.env
+*.env
 *.css.map
